@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot name="right_arm" xmlns:xacro="http://ros.org/wiki/xacro">  
+  <property name="PI" value="3.1416"/>
+  <xacro:include filename="$(find donaxi_description)/urdf/donaxi/dynamixel_description_arm_save.xacro" />
+  <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_kinect.urdf.xacro" />
+  <!-- The right_arm macro -->
+  <macro name ="right_arm" params="parent name color *origin">
+    <!-- right_arm_base joint -->
+
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertial>
+        <mass value="0.00001" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </collision>
+    </link>
+<!---->
+    <!-- First Servo -->
+    <dynamixel_EX106 parent="right_arm_base" name="servo_1">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <axis xyz="0 0 -1"/>
+    </dynamixel_EX106>
+    <!-- Link Cylinder -->
+    <donaxi_cylinder parent="servo_1" name="link_1" vlimit="3.14" llimit="-0.75" ulimit="1.0">
+       <origin xyz="0 0 -0.01" rpy="${PI} 0 ${PI/2}"/>
+       <axis xyz="0 0 -1" />
+    </donaxi_cylinder>
+    <!-- Second Servo -->
+    <dynamixel_EX106_revolute parent="link_1" name="servo_2" vlimit="3.14" llimit="-0.25" ulimit="1.0">
+       <origin xyz="0 0 -0.141" rpy="0 0 0"/>
+       <axis xyz="1 0 0" />
+    </dynamixel_EX106_revolute>
+    <!-- Arm_1 -->
+    <Arm_1 parent="servo_2" name="servo_3">
+       <origin xyz="0.0 -0.1263 0.0015" rpy="${PI/2} 0 0"/>
+       <axis xyz="0 0 0"/>
+    </Arm_1>
+    <!-- Arm_2 -->
+    <Arm_2 parent="servo_3" name="servo_4" vlimit="3.14" llimit="-1.5" ulimit="1.5">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <axis xyz="0 0 1" />
+    </Arm_2>
+    <!-- Arm_3 -->
+    <Arm_3 parent="servo_4" name="servo_5" vlimit="3.14" llimit="-0.75" ulimit="1.5">
+       <origin xyz="-0.0005 0.0275 0.0855863958" rpy="${PI/2} 0 0"/>
+       <axis xyz="0 0 1" />
+    </Arm_3>
+    <!-- Wrist -->
+    <wrist parent="servo_5" name="servo_6" vlimit="3.14" llimit="-1.5" ulimit="1.5">
+       <origin xyz="0.02319786258 0.16779239490 0.027" rpy="${PI/2} 0 0"/>
+       <axis xyz="0 0 -1" />
+    </wrist>
+    <!-- Gripper -->
+    <Gripper parent="servo_6" name="gripper" vlimit="3.14" llimit="-1.0" ulimit="1.5">
+       <origin xyz="-0.004 0.02125 -0.021" rpy="${PI/2} 0 0"/>
+       <axis xyz="0 0 -1" />
+    </Gripper>
+    <!-- Finger -->
+    <Finger parent="gripper" name="finger" vlimit="3.14" llimit="0.43" ulimit="-0.75">
+       <origin xyz="-0.0192 -0.0707 0.0072" rpy="0 ${-PI/2} 0"/>
+       <axis xyz="0 0 1" />
+    </Finger>
+
+    <!-- Planning link and joint for the right gripper -->
+    <joint name="virtual_joint" type="fixed">
+      <axis xyz="0 0 1" />
+      <origin xyz="0.0025 -0.15 0.02" rpy="${PI/2} ${-PI/2} ${-PI/2}"/>
+      <parent link="gripper_link"/>
+      <child link="virtual_link"/>
+    </joint>
+    
+    <link name="virtual_link">
+      <visual>	
+        <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+        <geometry>
+           <box size="0.001 0.0005 0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+
+<!---->    
+ </macro>
+</robot>

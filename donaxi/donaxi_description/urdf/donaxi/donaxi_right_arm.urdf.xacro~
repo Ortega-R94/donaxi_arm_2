@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<robot name="right_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <property name="PI" value="3.14159"/>
+  <xacro:include filename="$(find donaxi_description)/urdf/donaxi/dynamixel_description_arm.xacro" />
+  <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_kinect.urdf.xacro" />
+
+
+  <!-- The right_arm macro -->
+  <macro name ="right_arm" params="parent name color *origin">
+    <!-- right_arm_base joint -->
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertial>
+        <mass value="0.00001" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- First Servo -->
+    <dynamixel_EX106 parent="right_arm_base" name="servo_1">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <axis xyz="0 0 -1"/>
+    </dynamixel_EX106>
+
+    <!-- Link Cylinder -->
+    <donaxi_cylinder parent="servo_1" name="link_1" vlimit="3.14" llimit="-1.5" ulimit="1.0">
+       <origin xyz="0 0 0.05" rpy="0 0 0"/>
+       <axis xyz="0 0 -1" />
+    </donaxi_cylinder>
+
+    <!-- Second Servo -->
+    <dynamixel_EX106_revolute parent="link_1" name="servo_2" vlimit="3.14" llimit="-0.18" ulimit="1.0">
+       <origin xyz="0 -0.0196 0.08477" rpy="0 ${-PI/2} ${PI/2}"/>
+       <axis xyz="0 0 -1" />
+    </dynamixel_EX106_revolute>
+
+    <!-- Link Upper Arm -->
+    <Upper_Arm parent="servo_2" name="link_2">
+       <origin xyz="0 0.1250 -0.0215" rpy="${-PI/2} ${PI/2} 0"/>
+    </Upper_Arm>
+
+    <!-- Third Servo -->
+    <dynamixel_RX64 parent="link_2" name="servo_3">
+       <origin xyz="0.0 0.01443 0.1443	" rpy="${-PI/2} 0 0"/>
+    </dynamixel_RX64>
+
+    <!-- Link Elbow -->
+    <Elbow parent="servo_3" name="link_3" vlimit="3.14" llimit="-0.22" ulimit="1.5">
+       <origin xyz="0 0 -0.0154" rpy="0 ${PI} ${PI}"/>
+       <axis xyz="0 0 1" />
+    </Elbow>
+
+    <!-- Fourth Servo -->
+    <dynamixel_RX64 parent="link_3" name="servo_4">
+       <origin xyz="0.0221 0.1485 0.0	" rpy="${-PI/2} ${-PI/2} 0"/>
+    </dynamixel_RX64>
+
+    <!-- Fourth Link -->
+    <Fourth_Link parent="servo_4" name="link_4" vlimit="3.14" llimit="-1.45" ulimit="1.45">
+       <origin xyz="0 0 0.009" rpy="0 0 ${-PI/2}"/>
+       <axis xyz="0 0 1" />
+    </Fourth_Link>
+
+    <!-- Fifth Servo  -->
+    <dynamixel_RX28 parent="link_4" name="servo_5">
+       <origin xyz="0.0013 0.0133 0.0589" rpy="0 ${PI/2} ${PI/2}"/>
+    </dynamixel_RX28>
+
+    <!-- Wrist -->
+    <Wrist parent="servo_5" name="link_5" vlimit="3.14" llimit="-0.23" ulimit="1.59">
+       <origin xyz="0 -0.00235 -0.0352" rpy="0 0 ${PI}"/>
+       <axis xyz="0 0 1" />
+    </Wrist>
+
+    <!-- Gripper -->
+    <Gripper parent="link_5" name="link_6" >
+       <origin xyz="0.07100 0 0.03574" rpy="${-PI/2} ${PI/2} 0"/>
+    </Gripper>
+
+    <!-- right_arm_gripper joint -->
+    <joint name="gripper_joint" type="fixed">
+      <origin xyz="0.015 -0.085 -0.01825" rpy="0 0 ${-PI/2}" />
+      <parent link="link_6_link"/>
+      <child link="gripper_link" />
+    </joint>
+    <link name="gripper_link">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </collision>
+    </link>
+
+ </macro>
+
+</robot>

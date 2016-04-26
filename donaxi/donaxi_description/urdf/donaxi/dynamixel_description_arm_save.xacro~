@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+
+<robot name="arm_hardware" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="PI" value="3.14159"/>
+  <property name="DYNAMIXEL_MESH_SCALE" value="1"/>
+  
+  <property name="EX106_HEIGHT" value="0.046"/>
+  <property name="EX106_WIDTH" value="0.03920"/>
+  <property name="EX106_DEPTH" value="0.06510"/>
+  <property name="RX64_HEIGHT" value="0.041"/>
+  <property name="RX64_WIDTH" value="0.04020"/>
+  <property name="RX64_DEPTH" value="0.06110"/>
+  <property name="RX28_HEIGHT" value="0.03550"/>
+  <property name="RX28_WIDTH" value="0.03560"/>
+  <property name="RX28_DEPTH" value="0.05060"/>
+
+  <macro name="dynamixel_EX106" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="${EX106_WIDTH/2} ${EX106_DEPTH-0.01450} ${-EX106_HEIGHT}" rpy="0 0 ${PI}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/EX106.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="${EX106_WIDTH/2} ${EX106_DEPTH-0.01450} ${-EX106_HEIGHT}" rpy="0 0 0" />
+        <geometry>
+          <box size="${EX106_HEIGHT} ${EX106_WIDTH} ${EX106_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="dynamixel_EX106_revolute" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="axis" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="-0.0246 -0.0506 0.0195" rpy="0 ${PI/2} 0" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/EX106_1.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+         <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="${EX106_WIDTH/2} ${EX106_DEPTH-0.01450} ${-EX106_HEIGHT}" rpy="0 0 0" />
+        <geometry>
+          <box size="${EX106_HEIGHT} ${EX106_WIDTH} ${EX106_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="dynamixel_RX64" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="${RX64_WIDTH/2} ${RX64_DEPTH-0.01450} ${-RX64_HEIGHT}" rpy="0 0 ${PI}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/RX64.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="${RX64_WIDTH/2} ${RX64_DEPTH-0.01450} ${-RX64_HEIGHT}" rpy="0 0 0" />
+        <geometry>
+          <box size="${RX64_HEIGHT} ${RX64_WIDTH} ${RX64_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="dynamixel_RX28" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="${RX28_WIDTH/2} ${RX28_DEPTH-0.01450} ${-RX28_HEIGHT}" rpy="0 0 ${PI}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/RX28.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="${RX28_WIDTH/2} ${RX28_DEPTH-0.01450} ${-RX28_HEIGHT}" rpy="0 0 0" />
+        <geometry>
+          <box size="${RX28_HEIGHT} ${RX28_WIDTH} ${RX28_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="donaxi_cylinder" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/Axis.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="Arm_1" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${PI/2}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/Arm1.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${EX106_HEIGHT} ${EX106_WIDTH} ${EX106_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="Arm_2" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 ${PI/2}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/Arm2.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="Arm_3" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 ${PI} ${-PI/2}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/Arm_3.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="wrist" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 ${PI}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/wrist.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="Gripper" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 ${PI} 0" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/gripper.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+  <macro name="Finger" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="axis" />
+      <xacro:insert_block name="origin" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 ${PI/2} 0" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/finger.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+    </link>
+  </macro>
+<!-- -->
+
+
+<!-- .............................................................. -->
+
+</robot>

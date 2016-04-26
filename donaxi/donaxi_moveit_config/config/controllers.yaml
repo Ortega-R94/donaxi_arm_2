@@ -1,0 +1,22 @@
+controller_list:
+  - name: right_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - link_1_joint
+      - servo_2_joint
+      - servo_4_joint
+      - servo_5_joint
+      - servo_6_joint
+      - gripper_joint
+      
+  - name: right_gripper_controller
+    action_ns: gripper_action
+    type: GripperCommand
+    default: true
+    joints:
+      - finger_joint
+
+
+

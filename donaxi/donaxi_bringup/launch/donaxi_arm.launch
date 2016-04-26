@@ -1,0 +1,17 @@
+<launch>
+
+   <!-- Launch the arbotix driver in fake mode by default -->
+   <arg name="sim" default="true" />
+   
+   <!-- If using a real controller, look on /dev/ttyUSB0 by default -->
+   <arg name="port" default="/dev/ttyUSB0" />
+
+  <include file="$(find donaxi_bringup)/launch/donaxi_with_gripper.launch">
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="port" value="$(arg port)"/>
+  </include>
+
+  <include file="$(find donaxi_moveit_config)/launch/move_group.launch">
+  </include>
+
+</launch>

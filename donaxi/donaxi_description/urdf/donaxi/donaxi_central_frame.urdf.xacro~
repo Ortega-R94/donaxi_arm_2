@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<robot name="central_frame" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Define a number of dimensions using properties -->
+  <property name="cf_size_x" value="0.02" />
+  <property name="cf_size_y" value="0.48" />
+  <property name="cf_size_z" value="0.23" />
+
+  <property name="cf_mesh_scale" value ="1" />
+     
+  <!-- Define the superior box -->
+  <macro name="central_frame" params="parent name color *origin">
+    <joint name="${parent}_${name}_joint" type="prismatic">
+      <limit effort="1000.0" lower="-0.5" upper="0.05" velocity="0.1"/>
+      <axis xyz="0 0 1"/>
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link"/>
+    </joint>
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${PI/2}" />
+        <geometry>
+          <mesh filename="package://donaxi_description/meshes/Central_Frame.stl" scale="${cf_mesh_scale} ${cf_mesh_scale} ${cf_mesh_scale}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.24 0.115" rpy="0 0 0" />
+        <geometry>
+          <box size="${cf_size_x} ${cf_size_y} ${cf_size_z}" />
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+</robot>

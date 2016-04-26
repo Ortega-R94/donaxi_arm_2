@@ -1,0 +1,24 @@
+<package>
+  <name>donaxi_description</name>
+  <version>0.1.0</version>
+  <description>URDF/Xacro models for the Donaxi@HOME project</description>
+
+  <maintainer email="ing.ortega.94@gmail.com">Rodrigo Ortega</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/</url>
+  <author email="ing.ortega.94@gmail.com">Rodrigo Ortega</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+
+</package>

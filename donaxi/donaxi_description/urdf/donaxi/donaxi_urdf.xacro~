@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<robot name="donaxi" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="riel_offset_x" value="0.0" />
+   <property name="riel_offset_y" value="0.0" />
+   <property name="riel_offset_z" value="0.53000" />
+   <property name="cf_offset_x" value="0.04" />
+   <property name="cf_offset_y" value="-0.24" />
+   <property name="cf_offset_z" value="0.35" />
+   <property name="head_offset_x" value="0.0"/>
+   <property name="head_offset_y" value="0.0"/>
+   <property name="head_offset_z" value="0.60325"/>
+   <property name="ra_offset_x" value="-0.07184"/>
+   <property name="ra_offset_y" value="-0.17402"/>
+   <property name="ra_offset_z" value="-0.04902"/>
+   <property name="k_offset_x" value="-0.01" />
+   <property name="k_offset_y" value="0.23" />
+   <property name="k_offset_z" value="0.033" />
+
+   <!-- Include all component files -->
+   <xacro:include filename="$(find donaxi_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_base.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_riel.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_central_frame.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_kinect.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_neck_head.urdf.xacro" />
+   <xacro:include filename="$(find donaxi_description)/urdf/donaxi/donaxi_right_arm_save.urdf.xacro" />
+  
+   <!-- Add the base and wheels -->
+   <base name="base" color="Black"/>
+   <!-- Add the riel -->
+   <riel name="riel" parent="base" color="Black">
+   <origin xyz="${riel_offset_x} ${riel_offset_y} ${riel_offset_z}" rpy="0 0 0" />
+   </riel>
+   <!-- Add the central frame -->
+   <central_frame name ="central_frame" parent="riel" color="DarkGrey">
+   <origin xyz="${cf_offset_x} ${cf_offset_y} ${cf_offset_z}" rpy="0 0 0" />
+   </central_frame>
+   <!-- Add the kinect camera -->
+   <kinect name ="kinect" parent="central_frame" color="DarkGrey">
+   <origin xyz="${k_offset_x} ${k_offset_y} ${k_offset_z}" rpy="0 0 0" />
+   </kinect>
+   <!-- Add the neck and the head -->
+   <head name="head_base" parent="riel" color="DarkGrey">
+      <origin xyz="${head_offset_x} ${head_offset_y} ${head_offset_z}" rpy="0 0 ${PI}" />
+   </head>
+   <!-- Add the right arm -->
+   <right_arm name="arm_base" parent="kinect_depth_frame" color="DarkGrey" side="right" reflect="1">
+      <origin xyz="${ra_offset_x} ${ra_offset_y} ${ra_offset_z}" rpy="${PI/2} ${PI} 0" />
+   </right_arm>
+
+ </robot>
+
+
+

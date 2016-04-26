@@ -1,0 +1,12 @@
+controller_list:
+  - name: fake_right_arm_controller
+    joints:
+      - link_1_joint
+      - servo_2_joint
+      - servo_4_joint
+      - servo_5_joint
+      - servo_6_joint
+      - gripper_joint
+  - name: fake_right_gripper_controller
+    joints:
+      - finger_joint

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<robot name="riel" xmlns:xacro= "http://ros.org/wiki/xacro">
+  
+  <!-- Define a number of dimensions using properties -->
+  <property name="riel_size_x" value="0.025" />
+  <property name="riel_size_y" value="0.025" />
+  <property name="riel_size_z" value="0.885" />
+  <property name="riel_mesh_scale" value="1" />
+
+  <!-- Define the torso -->
+  <macro name="riel" params="parent name color *origin">
+  <joint name="${parent}_${name}_joint" type="fixed">
+    <xacro:insert_block name="origin" />
+    <parent link="${parent}_link"/>
+    <child link="${name}_link"/>
+  </joint>
+  <link name="${name}_link">
+    <visual>
+    <origin xyz="0 0 0" rpy="0 0 ${-PI/2}" />
+      <geometry>
+        <mesh filename="package://donaxi_description/meshes/Riel_FA.stl" scale="${riel_mesh_scale} ${riel_mesh_scale} ${riel_mesh_scale}" />
+      </geometry>
+      <material name="${color}" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${riel_size_x} ${riel_size_y} ${riel_size_z}" />
+      </geometry>
+    </collision>
+  </link>
+  </macro>
+ 
+
+</robot>
+
+
+
+

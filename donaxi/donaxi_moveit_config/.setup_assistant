@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: donaxi_description
+    relative_path: urdf/donaxi/donaxi_robot.urdf
+  SRDF:
+    relative_path: config/donaxi.srdf
+  CONFIG:
+    generated_timestamp: 1446598845

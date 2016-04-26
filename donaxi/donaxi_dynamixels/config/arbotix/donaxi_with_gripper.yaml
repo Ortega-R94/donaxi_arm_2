@@ -1,0 +1,23 @@
+port: /dev/ttyUSB0
+baud: 1000000
+rate: 100
+sync_write: True
+sync_read: False
+read_rate: 10
+write_rate: 10
+
+joints: {
+    link_1_joint: {id: 1, ticks: 4096, neutral: 1024, min_angle: -145, max_angle: 145},
+    servo_2_joint: {id: 2, ticks: 4096, neutral: 1278, min_angle: -90, max_angle: 90},
+    servo_4_joint: {id: 3, neutral: 430, invert: True},
+    servo_5_joint: {id: 4, neutral: 512, min_angle: -90, max_angle: 90},
+    servo_6_joint: {id: 5, neutral: 512, min_angle: -90, max_angle: 90},
+    gripper_joint: {id: 6, neutral: 512, min_angle: -90, max_angle: 90},
+    finger_joint:  {id: 7, neutral: 512}
+}
+
+
+controllers: {
+   right_arm_controller: {onboard: False, action_name: right_arm_controller/follow_joint_trajectory, type: follow_controller, joints: [link_1_joint, servo_2_joint, servo_4_joint, servo_5_joint, servo_6_joint, gripper_joint]}
+}
+   

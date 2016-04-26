@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="debug" default="false" />
+  <arg name="sim" default="true" />
+
+  <include file="$(find donaxi_bringup)/launch/donaxi_with_gripper.launch">
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
+  <include file="$(find donaxi_moveit_config)/launch/move_group.launch">
+  </include>
+  
+
+</launch>
+
